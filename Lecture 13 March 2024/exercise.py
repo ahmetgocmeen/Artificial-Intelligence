@@ -44,8 +44,8 @@ iCity = [(1,random.uniform(1,200),random.uniform(1,200)),(3,random.uniform(1,200
 
 n = 5
 iCities = ICities(n)
-print(f"\nRandom Cities: {iCities}")
-
 print(f"\nCircular distance between random iCities: {distCircularIC(iCities)}")
+cities = swapBestIC(iCities)
+print(f"\nCircular distance between random iCities: {distCircularIC(cities)}")
 
 
