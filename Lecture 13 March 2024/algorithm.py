@@ -18,17 +18,29 @@ def distCircularIC(iCities):
         sumDistance += distIC(city1,city2) 
     return sumDistance
 
-def trocaIC(iCities,p1,p2):
+def changeIC(iCities,p1,p2):
     newList = iCities.copy()
     newList[p1], newList[p2] = newList[p2],newList[p1]
     return newList
 
-def trocaSeMelhorIC(iCities):
+def changeifBetterIC(iCities):
     distance = distCircularIC(iCities)
     p1 = random.randint(0,len(iCities)-1)
     p2 = random.randint(0,len(iCities)-1)
-    newList = trocaIC(iCities,p1,p2)
+    newList = changeIC(iCities,p1,p2)
     newDistance = distCircularIC(newList)
     if(newDistance <= distance):
         return newList
     return iCities
+
+def betterDistCircularIC(iCities, r):
+    newList = iCities
+    for i in range (r):
+        newList = changeifBetterIC(newList)
+    return newList
+
+def optDistCircularIC(iCities, r):
+    distance = distCircularIC(iCities)
+    opt = betterDistCircularIC(iCities,r)
+    finalDistance = distCircularIC(opt)
+    return distance,finalDistance,opt 
