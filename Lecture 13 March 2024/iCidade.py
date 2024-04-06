@@ -4,8 +4,8 @@ import libic as lb
 import algorithm as alg
 
 w = lb.windowIC(800)
-#cityList = lb.readTSP2ListIC("berlin52.tsp")
-cityList = lb.readTSP2ListICOpt("berlin52.tsp", "berlin52.opt.tour")
+cityList = lb.readTSP2ListIC("berlin52.tsp")
+#cityList = lb.readTSP2ListICOpt("berlin52.tsp", "berlin52.opt.tour")
 
 print(f"\nFirst Distance: {alg.distCircularIC(cityList)}")
 lb.drawIC(cityList,w) 
@@ -17,7 +17,8 @@ if len(sys.argv) > 1:
     iter = int(sys.argv[1])
 
 st = time.process_time()
-(ci,cf,optList) = alg.optDistCircularIC(cityList,iter)
+#(ci,cf,optList) = alg.optDistCircularIC(cityList,iter)
+(optList,distance) = alg.hill_climb_tsp(cityList)
 #optList = cityList
 #for i in range(iter):
 #    optList = alg.mehoraDistCircularIC(optList,1)

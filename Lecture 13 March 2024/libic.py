@@ -2,9 +2,6 @@ import math
 import random
 from tkinter import *
 
-# --------------------------
-#   Funcoes parte grafica
-# --------------------------
 def minmaxListaIC(l):
     min,max = l[0][1], l[0][1]
     for ic in l:
@@ -18,7 +15,6 @@ def minmaxListaIC(l):
             max = ic[2]
     return min,max
 
-# Considero limite de 15 pixeis Ã  volta
 def convertXY(x, y, min, max, size):
     limite = 15
     ratio =  (size - 2*limite) / (max-min)
@@ -54,13 +50,9 @@ def drawIC(l, windefs):
     return windefs
 
 
-# ----------------------------------
-#   FunÃ§Ãµes para ler de ficheiros
-# ----------------------------------
 def checkStrBegin(s, txt):
     return (s == txt[0:len(s)])
 
-# FunÃ§Ã£o para ler um ficheiro tsp
 def readTSP2ListIC(file):
     readIC = False
     listaIC = []
@@ -80,7 +72,6 @@ def readTSP2ListIC(file):
     fin.close()
     return listaIC
 
-# FunÃ§Ã£o para ler um ficheiro TSP e respetivo ficheiro de tour Ã³ptima
 def readTSP2ListICOpt(file, fileOpt):
     listaIC = readTSP2ListIC(file)
     readID = False
@@ -103,27 +94,3 @@ def readTSP2ListICOpt(file, fileOpt):
     fin.close()
     return listaOpt
 
-
-
-# -------------------------
-#   Para testar o cÃ³digo:
-# -------------------------
-"""
-# Criar uma janela    
-w = windowIC(800)
-
-# Criar uma lista de IC
-#l = [(1, 10.0, 15.0), (2, 15.0, 6.5), (3, 12.1, 19.7)]
-
-# Ler um TSP para uma lista de IC
-l = readTSP2ListIC("berlin52.tsp")
-# Desenhar graficamente a lista de IC
-drawIC(l,w)
-input("Enter para continuar... ")
-
-# Ler o TSP e a tour Ã³ptima para uma lista de IC
-l = readTSP2ListICOpt("berlin52.tsp", "berlin52.opt.tour")
-# Desenhar graficamente a lista de IC
-drawIC(l,w)
-input("Enter para continuar... ")
-"""

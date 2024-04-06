@@ -1,18 +1,47 @@
+import sys
+import time
+import math
 import libic as lb
-
+import algorithm as alg
+import greedy as grd
 w = lb.windowIC(800)
+cityList = lb.readTSP2ListIC("berlin52.tsp")
+#cityList = lb.readTSP2ListICOpt("berlin52.tsp", "berlin52.opt.tour")
 
-# Criar uma lista de IC
-#l = [(1, 10.0, 15.0), (2, 15.0, 6.5), (3, 12.1, 19.7)]
+print(f"\nFirst Distance: {alg.distCircularIC(cityList)}")
+lb.drawIC(cityList,w) 
+input("Press Enter to Continue...")
+print("Optimising...")
 
-# Ler um TSP para uma lista de IC
-l = lb.readTSP2ListIC("berlin52.tsp")
-# Desenhar graficamente a lista de IC
-lb.drawIC(l,w)
-input("Enter para continuar... ")
+def euclidean_distance(city1, city2):
+    """Compute the Euclidean distance between two cities."""
+    return math.sqrt((city1[1] - city2[1])**2 + (city1[2] - city2[2])**2)
 
-# Ler o TSP e a tour Ã³ptima para uma lista de IC
-l = lb.readTSP2ListICOpt("berlin52.tsp", "berlin52.opt.tour")
-# Desenhar graficamente a lista de IC
-lb.drawIC(l,w)
-input("Enter para continuar... ")
+def create_distance_matrix(cities):
+    """Create a distance matrix for a list of cities."""
+    n = len(cities)
+    dist_matrix = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(i + 1, n):  # Distance matrix is symmetric
+            dist = euclidean_distance(cities[i], cities[j])
+            dist_matrix[i][j] = dist_matrix[j][i] = dist
+    return dist_matrix
+
+dist_matrix = create_distance_matrix(cityList)
+iter = 10000
+if len(sys.argv) > 1:
+    iter = int(sys.argv[1])
+
+st = time.process_time()
+#(ci,cf,optList) = alg.optDistCircularIC(cityList,iter)
+(optList,distance) = grd.hill_climbing_greedy(cityList,dist_matrix)
+#optList = cityList
+#for i in range(iter):
+#    optList = alg.mehoraDistCircularIC(optList,1)
+et = time.process_time()
+print("CPU Time: ", (et - st)*1000, "ms")
+
+lb.drawIC(optList,w)
+print("Distance: ", distance)
+print("Final Distance: ", alg.distCircularIC(optList))
+input("Press Enter")

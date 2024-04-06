@@ -44,3 +44,34 @@ def optDistCircularIC(iCities, r):
     opt = betterDistCircularIC(iCities,r)
     finalDistance = distCircularIC(opt)
     return distance,finalDistance,opt 
+
+def swap_cities(iCities, p1, p2):
+    """
+    Swaps two cities in the tour.
+    """
+    newTour = iCities[:]
+    newTour[p1], newTour[p2] = newTour[p2], newTour[p1]
+    return newTour
+
+def hill_climb_tsp(iCities):
+    """
+    Performs hill climbing optimization for the TSP.
+    """
+    current_distance = distCircularIC(iCities)
+    improved = True
+
+    while improved:
+        improved = False
+        for i in range(len(iCities) - 1):
+            for j in range(i + 1, len(iCities)):
+                newTour = swap_cities(iCities, i, j)
+                new_distance = distCircularIC(newTour)
+                if new_distance < current_distance:
+                    iCities = newTour
+                    current_distance = new_distance
+                    improved = True
+                    break  # Exit the inner loop to restart search from new base tour
+            if improved:
+                break  # Restart the outer loop if an improvement was found
+
+    return iCities, current_distance
