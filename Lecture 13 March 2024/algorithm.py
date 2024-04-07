@@ -3,8 +3,8 @@ import random
 import libic as lb
 
 def distIC(city1,city2):
-    x1, y1 = city1[1], city1[2]
-    x2, y2 = city2[1], city2[2]
+    x1, y1 = city1[0], city1[1]
+    x2, y2 = city2[0], city2[1]
     return math.sqrt((x2-x1)**2 + (y2-y1)**2)
 
 def distCircularIC(iCities):

@@ -4,6 +4,7 @@ import math
 import libic as lb
 import algorithm as alg
 import greedy as grd
+import gemini as gem
 w = lb.windowIC(800)
 cityList = lb.readTSP2ListIC("berlin52.tsp")
 #cityList = lb.readTSP2ListICOpt("berlin52.tsp", "berlin52.opt.tour")
@@ -27,21 +28,25 @@ def create_distance_matrix(cities):
             dist_matrix[i][j] = dist_matrix[j][i] = dist
     return dist_matrix
 
-dist_matrix = create_distance_matrix(cityList)
+#dist_matrix = create_distance_matrix(cityList)
 iter = 10000
 if len(sys.argv) > 1:
     iter = int(sys.argv[1])
 
 st = time.process_time()
+final = grd.hill_climbing(cityList)
 #(ci,cf,optList) = alg.optDistCircularIC(cityList,iter)
-(optList,distance) = grd.hill_climbing_greedy(cityList,dist_matrix)
+#(optList,distance) = grd.hill_climbing_greedy(cityList,dist_matrix)
+#optList = gem.hill_climbing(cityList)
 #optList = cityList
 #for i in range(iter):
 #    optList = alg.mehoraDistCircularIC(optList,1)
 et = time.process_time()
 print("CPU Time: ", (et - st)*1000, "ms")
 
-lb.drawIC(optList,w)
-print("Distance: ", distance)
-print("Final Distance: ", alg.distCircularIC(optList))
+#lb.drawIC(optList,w)
+#print("Optimized route:", optList)
+#print("Total distance:", gem.total_distance(optList))
+print("Distance: ", final[0])
+#print("Final Distance: ", alg.distCircularIC(optList))
 input("Press Enter")

@@ -17,8 +17,8 @@ if len(sys.argv) > 1:
     iter = int(sys.argv[1])
 
 st = time.process_time()
-#(ci,cf,optList) = alg.optDistCircularIC(cityList,iter)
-(optList,distance) = alg.hill_climb_tsp(cityList)
+(ci,cf,optList) = alg.optDistCircularIC(cityList,iter)
+#(optList,distance) = alg.hill_climb_tsp(cityList)
 #optList = cityList
 #for i in range(iter):
 #    optList = alg.mehoraDistCircularIC(optList,1)

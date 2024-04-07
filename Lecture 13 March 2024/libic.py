@@ -5,14 +5,14 @@ from tkinter import *
 def minmaxListaIC(l):
     min,max = l[0][1], l[0][1]
     for ic in l:
+        if ic[0] < min:
+            min = ic[0]
+        if ic[0] > max:
+            max = ic[0]
         if ic[1] < min:
             min = ic[1]
         if ic[1] > max:
             max = ic[1]
-        if ic[2] < min:
-            min = ic[2]
-        if ic[2] > max:
-            max = ic[2]
     return min,max
 
 def convertXY(x, y, min, max, size):
@@ -37,11 +37,11 @@ def drawIC(l, windefs):
 
     min, max = minmaxListaIC(l)
     for i in range(-1,len(l)-1):
-        xi,yi = convertXY(l[i][1], l[i][2], min, max, tamanho)
-        xf,yf = convertXY(l[i+1][1], l[i+1][2], min, max, tamanho)
+        xi,yi = convertXY(l[i][0], l[i][1], min, max, tamanho)
+        xf,yf = convertXY(l[i+1][0], l[i+1][1], min, max, tamanho)
         c.create_line(xi,yi,xf,yf, fill="blue", width=2)
     for ic in l:
-        x,y = convertXY(ic[1], ic[2], min, max, tamanho)
+        x,y = convertXY(ic[0], ic[1], min, max, tamanho)
         c.create_oval(x-5,y-5,x+5,y+5, fill="yellow")
         c.create_text(x,y, text=str(ic[0]), fill="black", font=('Helvetica', '8', 'bold'))
 
@@ -67,7 +67,7 @@ def readTSP2ListIC(file):
             break
         if readIC:
             lista = linha.split()
-            ic = int(lista[0]), float(lista[1]), float(lista[2])
+            ic = float(lista[1]), float(lista[2])
             listaIC.append(ic)
     fin.close()
     return listaIC
