@@ -13,6 +13,7 @@ input("Press Enter to Continue...")
 print("Optimising...")
 
 iter = 10000
+numNeigbors = 10000
 if len(sys.argv) > 1:
     iter = int(sys.argv[1])
 

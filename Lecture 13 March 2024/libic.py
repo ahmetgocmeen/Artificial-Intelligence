@@ -43,7 +43,7 @@ def drawIC(l, windefs):
     for ic in l:
         x,y = convertXY(ic[0], ic[1], min, max, tamanho)
         c.create_oval(x-5,y-5,x+5,y+5, fill="yellow")
-        c.create_text(x,y, text=str(ic[0]), fill="black", font=('Helvetica', '8', 'bold'))
+        #c.create_text(x,y, text=str(ic[0]), fill="black", font=('Helvetica', '8', 'bold'))
 
     c.pack()
     window.update()

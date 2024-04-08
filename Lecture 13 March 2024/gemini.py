@@ -29,6 +29,7 @@ def hill_climbing(city_list, max_iterations=10000):
   """Performs hill climbing search to find a local optimum."""
   current_state = city_list.copy()
   current_distance = total_distance(current_state)
+  print(current_distance)
 
   for _ in range(max_iterations):
     # Generate a random neighbor by swapping two cities
