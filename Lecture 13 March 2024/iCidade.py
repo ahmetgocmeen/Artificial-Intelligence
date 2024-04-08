@@ -12,7 +12,6 @@ lb.drawIC(cityList,w)
 input("Press Enter to Continue...")
 print("Optimising...")
 
-#dist_matrix = create_distance_matrix(cityList)
 iter = 10000
 numNeigbors = 10000
 temperature = 0.8
