@@ -2,43 +2,36 @@ import math
 import random
 import algorithm as alg
 
-def hillClimbing(cityList, maxIterations=10000):
+def hillClimbing(cityList, maxIterations):
   currentState = cityList.copy()
   currentDistance = alg.distCircularIC(currentState)
 
   for _ in range(maxIterations):
-    # Generate a random neighbor by swapping two cities
     neighborIndex1 = random.randint(0, len(cityList) - 1)
     neighborIndex2 = random.randint(0, len(cityList) - 1)
     neighbor = alg.swapIC(currentState.copy(), neighborIndex1, neighborIndex2)
 
     neighborDistance = alg.distCircularIC(neighbor)
-
-    # Improve the solution if a better neighbor is found
     if neighborDistance < currentDistance:
       currentState = neighbor
       currentDistance = neighborDistance
 
   return currentState
 
-def stochasticHillClimbing(cityList, maxIterations=10000, temperature=0.8):
+def stochasticHillClimbing(cityList, maxIterations, temperature):
   currentState = cityList.copy()
   currentDistance = alg.distCircularIC(currentState)
 
   for _ in range(maxIterations):
-    # Generate a random neighbor by swapping two cities
     neighborIndex1 = random.randint(0, len(cityList) - 1)
     neighborIndex2 = random.randint(0, len(cityList) - 1)
     neighbor = alg.swapIC(currentState.copy(), neighborIndex1, neighborIndex2)
 
     neighborDistance = alg.distCircularIC(neighbor)
 
-    # Accept improvement unconditionally
     if neighborDistance < currentDistance:
       currentState = neighbor
       currentDistance = neighborDistance
-
-    # Accept worse neighbor with a probability based on temperature
     else:
       delta_distance = neighborDistance - currentDistance
       acceptance_probability = math.exp(-delta_distance / temperature)
@@ -46,48 +39,43 @@ def stochasticHillClimbing(cityList, maxIterations=10000, temperature=0.8):
         currentState = neighbor
         currentDistance = neighborDistance
 
-    # Gradually decrease temperature to favor better solutions later
-    temperature *= 0.95  # You can adjust this cooling rate
+    temperature *= 0.95 
 
   return currentState
 
-def firstChoiceHillClimbing(cityList, maxIterations, num_neighbors):
+def firstChoiceHillClimbing(cityList, maxIterations, numNeighbors):
   currentState = cityList.copy()
   currentDistance = alg.distCircularIC(currentState)
 
   for _ in range(maxIterations):
     improved = False
-    for _ in range(num_neighbors):
-      # Generate a random neighbor by swapping two cities
+    for _ in range(numNeighbors):
       neighborIndex1 = random.randint(0, len(cityList) - 1)
       neighborIndex2 = random.randint(0, len(cityList) - 1)
       neighbor = alg.swapIC(currentState.copy(), neighborIndex1, neighborIndex2)
 
       neighborDistance = alg.distCircularIC(neighbor)
 
-      # Accept the first improvement found
       if neighborDistance < currentDistance:
         currentState = neighbor
         currentDistance = neighborDistance
         improved = True
-        break  # Stop searching for better neighbors in this iteration
+        break 
 
-    # If no improvement found in this iteration, terminate
     if not improved:
       break
 
   return currentState
 
-def restartStochasticHillHlimbing(cityList, maxIterations, temperature, max_restarts):
+def restartStochasticHillHlimbing(cityList, maxIterations, temperature, numRestarts):
   bestState = cityList.copy()
   bestDistance = alg.distCircularIC(bestState)
 
-  for _ in range(max_restarts):
+  for _ in range(numRestarts):
     currentState = cityList.copy()
     currentDistance = alg.distCircularIC(currentState)
 
     for _ in range(maxIterations):
-      # Generate a random neighbor by swapping two cities
       neighborIndex1 = random.randint(0, len(cityList) - 1)
       neighborIndex2 = random.randint(0, len(cityList) - 1)
       neighbor = alg.swapIC(currentState.copy(), neighborIndex1, neighborIndex2)
@@ -102,10 +90,8 @@ def restartStochasticHillHlimbing(cityList, maxIterations, temperature, max_rest
           currentState = neighbor
           currentDistance = neighborDistance
 
-    # Gradually decrease temperature to favor better solutions later
-    temperature *= 0.95  # You can adjust this cooling rate
+    temperature *= 0.95 
 
-    # Update best solution if current is better
     if currentDistance < bestDistance:
       bestState = currentState.copy()
       bestDistance = currentDistance
